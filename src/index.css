@@ -1,13 +1,56 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+form {
+    height: 40px;
+    width: 550px;
+    margin: 50px 0 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button,
+#inputBtn {
+    padding: 3px;
+    border-radius: 5px;
+    border: 2px solid rgb(4, 108, 160);
+    background-color: transparent;
+}
+
+#inputBtn {
+    width: 50px;
+    text-align: center;
+}
+.item-list {
+    background-color: rgba(168, 248, 248, 0.837);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+input[type="text" i] {
+    padding: 3px 150px;
+    border: 2px solid rgb(4, 108, 160);
+    border-radius: 5px;
+}
+
+.filter {
+    display: flex;
+    justify-content: space-between;
+    width: 45%;
 }
