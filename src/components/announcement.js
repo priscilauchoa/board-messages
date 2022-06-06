@@ -1,10 +1,7 @@
 import react from "react";
-import { useState, useEffect } from "react";
 
 export default function Announcements(props) {
-    function deleteClickHandler() {
-        props.deleteHandler(props.announcement);
-    }
+ 
 
     return (
         <>
@@ -14,20 +11,23 @@ export default function Announcements(props) {
                         {props.announcements.length > 0 &&
                             props.announcements.map((announcement) => {
                                 return (
-                                    <>
-                                        <div
-                                            className="item-list"
-                                            key={announcement.id}
-                                        >
-                                            <p>{announcement.text}</p>
+                                    <div
+                                        className="item-list"
+                                        key={announcement.id}
+                                    >
+                                        <p>{announcement.text}</p>
 
-                                            <button
-                                                onClick={deleteClickHandler}
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </>
+                                        <button
+                                            name={announcement.id}
+                                            onClick={(e) =>
+                                                props.onDeleteClick(
+                                                    announcement.id
+                                                )
+                                            }
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 );
                             })}
                     </div>

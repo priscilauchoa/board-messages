@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Filter from "./filter.js";
 import Announcement from "./announcement.js";
 
 function useFetchAnnouncements(filter) {
     const [announcements, setAnnouncements] = useState([]);
 
-    useEffect(() => {
+    const fetchAnnouncements = useCallback(() => {
         fetch(`http://localhost:8000/api/announcement/${filter}`)
             .then((resp) => resp.json())
             .then((response) => {
@@ -14,11 +14,15 @@ function useFetchAnnouncements(filter) {
             });
     }, [filter]);
 
-    return announcements;
+    useEffect(() => {
+        fetchAnnouncements();
+    }, [filter, fetchAnnouncements]);
+
+    return [announcements, fetchAnnouncements];
 }
 export default function Board() {
     const [filter, setFilter] = useState("All");
-    const announcements = useFetchAnnouncements(filter);
+    const [announcements, fetchAnnouncements] = useFetchAnnouncements(filter);
     const [newText, setNewText] = useState("");
 
     const handleChange = (event) => {
@@ -28,10 +32,7 @@ export default function Board() {
         setFilter(filter);
     };
 
-    function createAnnouncement(e) {
-        e.preventDefault();
-        console.log("newText \n -->", newText);
-
+    function createAnnouncement() {
         fetch("http://localhost:8000/api/announcement", {
             method: "POST",
             headers: {
@@ -39,14 +40,21 @@ export default function Board() {
             },
             body: JSON.stringify({ newText }),
         })
-            .then((resp) => resp.json())
-            .then((resp) => {
-                setFilter(filter);
-            })
+            .then((resp) => fetchAnnouncements())
             .catch((err) => {
                 console.log(err);
             });
     }
+    function clickHandleDelete(announcementId) {
+        fetch(`http://localhost:8000/api/announcement/${announcementId}`, {
+            method: "DELETE",
+        })
+            .then((resp) => fetchAnnouncements())
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
     return (
         <>
             <form>
@@ -74,7 +82,11 @@ export default function Board() {
                 />
             </div>
 
-            <Announcement announcements={announcements} />
+            <Announcement
+                announcements={announcements}
+                filter={filter}
+                onDeleteClick={clickHandleDelete}
+            />
         </>
     );
 }
