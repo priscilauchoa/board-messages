@@ -19,7 +19,7 @@ export default function Announcements(props) {
                                             className="item-list"
                                             key={announcement.id}
                                         >
-                                            <p>item{announcement.text}</p>
+                                            <p>{announcement.text}</p>
 
                                             <button
                                                 onClick={deleteClickHandler}
