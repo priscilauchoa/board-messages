@@ -16,7 +16,7 @@ function useFetchAnnouncements(filter) {
 
     useEffect(() => {
         fetchAnnouncements();
-    }, [filter, fetchAnnouncements]);
+    }, [fetchAnnouncements]);
 
     return [announcements, fetchAnnouncements];
 }
@@ -32,7 +32,10 @@ export default function Board() {
         setFilter(filter);
     };
 
-    function createAnnouncement() {
+    function createAnnouncement(e) {
+        e.preventDefault();
+        console.log("createee++");
+
         fetch("http://localhost:8000/api/announcement", {
             method: "POST",
             headers: {
@@ -62,12 +65,7 @@ export default function Board() {
                     Text:{" "}
                     <input type="text" name="name" onChange={handleChange} />
                 </label>
-                <input
-                    id="inputBtn"
-                    type="text"
-                    value="Create"
-                    onClick={createAnnouncement}
-                />
+                <button onClick={createAnnouncement}>Create</button>
             </form>
             <div className="filter">
                 <Filter filter="All" clickHandler={filterClickHandler} />
